@@ -1,5 +1,5 @@
 # Clima App
-An iOS mobile app that retrives weather conditions and temperature based on your current (or desired) location.
+A basic iOS mobile app that retrives weather conditions and temperature based on your current (or desired) location.
 ## Features
 * Background images
 * Segues that allow you to switch from the Home View Controller to the "Change City" View Controller
