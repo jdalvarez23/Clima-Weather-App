@@ -12,7 +12,7 @@ import Alamofire
 import SwiftyJSON
 
 
-class WeatherViewController: UIViewController, CLLocationManagerDelegate {
+class WeatherViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDelegate {
     
     //Constants
     let WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather"
@@ -115,7 +115,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         
         cityLabel.text = weatherDataModel.city // set value to corresponding city name
         
-        temperatureLabel.text = String(weatherDataModel.temperature) // set value to corresponding temperature value
+        temperatureLabel.text = "\(weatherDataModel.temperature)°" // set value to corresponding temperature value
         
         weatherIcon.image = UIImage(named: weatherDataModel.weatherIconName) // set value to corresponding weather icon image
         
@@ -167,11 +167,30 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     
     //Write the userEnteredANewCityName Delegate method here:
-    
+    // protocol method required
+    func userEnteredANewCityName(city: String) {
+        
+        let params: [String: String] = ["q": city, "appid": APP_ID]
+        
+        getWeatherData(url: WEATHER_URL, parameters: params)
+        
+    }
 
     
     //Write the PrepareForSegue Method here
-    
+    // method that gets triggered when the view controller is changed through a segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // execute if segue identifier is valid "changeCityName" segue
+        if segue.identifier == "changeCityName" {
+            
+            let destinationVC = segue.destination as! ChangeCityViewController // initialize segue destination and set value to ChangeCityViewController data type
+            
+            destinationVC.delegate = self // set current view controller as the delegate to recieve data
+            
+        }
+        
+    }
     
     
     
